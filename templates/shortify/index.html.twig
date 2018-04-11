@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="text-center">
+        <h3>Добро пожаловать на Shortify!</h3>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }} label-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <p v-if="errors.length">
+            <p v-for="error in errors" class="label-warning">{{ "{{ error }}" }}</p>
+        </p>
+
+        <form class="form-inline">
+            <div class="form-group mx-sm-3 mb-2">
+
+                <label for="encodingUrl" class="sr-only">Url</label>
+                <input v-model="encodingUrl" type="text" class="form-control" id="encodingUrl"
+                       placeholder="Введите Url...">
+            </div>
+            <button v-on:click="shortify" v-on:message="shortify" type="button" class="btn btn-primary mb-2">Укоротить</button>
+        </form>
+    </div>
+
+    <div class="text-center">
+        <div class="text-center">
+            {% for shortUrl in shortifiedUrls %}
+                <a class="row" href="http://{{ shortUrl.shortUrl }}">
+                    {{ shortUrl.shortUrl }}
+                </a>
+            {% endfor %}
+            <a v-for="shortUrl in shortUrls" class="row" :href="shortUrl"> {{ "{{ shortUrl }}" }}</a>
+        </div>
+    </div>
+{% endblock %}
